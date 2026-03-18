@@ -232,20 +232,10 @@ a:hover {
   }
 }
 
-/* ═══ loading screen transition ═══ */
-
-.site-wrapper, 
+.site-wrapper,
 .top-header {
-  opacity: 0;
-  transform: scale(0.95) translateY(20px);
-  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.2s ease;
-}
-
-/* This class will be added via JS when the loader finishes */
-body.page-ready .site-wrapper, 
-body.page-ready .top-header {
   opacity: 1;
-  transform: scale(1) translateY(0);
+  transform: none;
 }
 
 /* ═══ TOP HEADER ═══ */
