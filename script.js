@@ -36,7 +36,7 @@ function startTyping(){
 }
 
 // ═══ ACTIVE NAV ═══
-const secs=document.querySelectorAll('section[id]'),navs=document.querySelectorAll('.sidebar-nav a');
+const secs=document.querySelectorAll('section[id]'),navs=document.querySelectorAll('.sidebar-nav .nav-link');
 window.addEventListener('scroll',()=>{let c='';secs.forEach(s=>{if(scrollY>=s.offsetTop-200)c=s.id});navs.forEach(l=>{l.classList.remove('active');if(l.dataset.section===c)l.classList.add('active')})});
 
 // ═══ SIDEBAR LIVE CLOCK & GREETING ═══
@@ -69,15 +69,17 @@ window.addEventListener('scroll',()=>{let c='';secs.forEach(s=>{if(scrollY>=s.of
     // Add leading zero if needed
     function pad(n) { return n < 10 ? '0' + n : n; }
     
-    // Update DOM elements
-    document.getElementById('sbHr').textContent = pad(h);
-    document.getElementById('sbMin').textContent = pad(m);
-    document.getElementById('sbAmpm').textContent = ampm;
-    document.getElementById('sidebarGreeting').innerHTML = `<i class="bi ${icon}"></i> ${greeting}`;
-    
+    // Update DOM elements (desktop sidebar + mobile offcanvas)
+    function setEl(id, val) { const el = document.getElementById(id); if(el) el.textContent = val; }
+    setEl('sbHr', pad(h)); setEl('sbMin', pad(m)); setEl('sbAmpm', ampm);
+    setEl('mbHr', pad(h)); setEl('mbMin', pad(m)); setEl('mbAmpm', ampm);
+    const greetEl = document.getElementById('sidebarGreeting');
+    if(greetEl) greetEl.innerHTML = `<i class="bi ${icon}"></i> ${greeting}`;
+
     // Update Date
     const opts = { weekday: 'long', month: 'long', day: 'numeric' };
-    document.getElementById('sbDate').textContent = now.toLocaleDateString('en-US', opts);
+    const dateStr = now.toLocaleDateString('en-US', opts);
+    setEl('sbDate', dateStr); setEl('mbDate', dateStr);
   }
 
   // Run immediately, then update every second
@@ -104,12 +106,6 @@ window.addEventListener('scroll',()=>{let c='';secs.forEach(s=>{if(scrollY>=s.of
 // ═══ SKILL BARS ═══
 const so=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.querySelectorAll('.bar-fill').forEach(b=>{b.style.width=b.dataset.width+'%'})})},{threshold:.3});
 document.querySelectorAll('.skills-section').forEach(s=>so.observe(s));
-
-// ═══ TESTIMONIAL SLIDER ═══
-(function(){const track=document.getElementById('sliderTrack'),dots=document.querySelectorAll('.slider-dot');let cur=0,tot=dots.length,auto;
-function go(n){cur=n;track.style.transform='translateX(-'+cur*100+'%)';dots.forEach((d,i)=>d.classList.toggle('active',i===cur))}
-dots.forEach(d=>d.addEventListener('click',()=>{go(+d.dataset.slide);clearInterval(auto);auto=setInterval(()=>go((cur+1)%tot),5000)}));
-auto=setInterval(()=>go((cur+1)%tot),5000)})();
 
 // ═══ BACK TO TOP ═══
 window.addEventListener('scroll',()=>{document.getElementById('backToTop').classList.toggle('show',scrollY>400)});
