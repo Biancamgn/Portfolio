@@ -800,4 +800,25 @@ a:hover { color: var(--orange-glow); }
   min-width: 0;
 }
 
+/* Fix navbar overflow on mobile */
+@media (max-width: 991.98px) {
+  #mainNavbar .brand {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  #mainNavbar .brand-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 1rem;
+  }
+
+  #mainNavbar .navbar-toggler {
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+}
+
 }
