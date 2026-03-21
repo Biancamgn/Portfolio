@@ -787,4 +787,17 @@ a:hover { color: var(--orange-glow); }
   .about-name { font-size: 32px; }
   .slide-inner { flex-direction: column; }
   .slide-inner img { width: 80px; height: 80px; border-radius: 50%; }
+
+/* Fix navbar items on one line at mobile */
+#mainNavbar {
+  flex-wrap: nowrap !important;
+}
+
+#mainNavbar .brand {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
 }
