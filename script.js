@@ -184,4 +184,22 @@ if (form) {
     }
 
   });
+
+  // ═══ MOBILE NAV: scroll to section after offcanvas closes ═══
+document.querySelectorAll('#mobileNav .nav-link[href^="#"]').forEach(link => {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    const targetId = this.getAttribute('href').substring(1);
+    const target = document.getElementById(targetId);
+    if (!target) return;
+
+    // Wait for offcanvas close animation to finish, then scroll
+    const offcanvasEl = document.getElementById('mobileNav');
+    offcanvasEl.addEventListener('hidden.bs.offcanvas', function handler() {
+      offcanvasEl.removeEventListener('hidden.bs.offcanvas', handler);
+      target.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+});
+
 }
